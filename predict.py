@@ -113,7 +113,7 @@ if iklim is not None:
         
     if option == 'Show Etc': 
         if rainfall.isnull().any(): st.write("Data contains NaNs")
-        elif np.isinf(rainfall).any(): st.write("Data contains infinite values")
+        if np.isinf(rainfall).any(): st.write("Data contains infinite values")
 
         
     if option == 'Show Etc': st.subheader('Augmented Dickey-Fuller (ADF) Test')
