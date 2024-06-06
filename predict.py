@@ -106,13 +106,13 @@ if iklim is not None:
         dsd = "Data contains NaNs"
     if np.isinf(rainfall).any():
         dsd = "Data contains infinite values"
+    if option == 'Show Etc': st.write(dsd)
     mean_rainfall = rainfall.mean()
     min_rainfall = rainfall.min()
     max_rainfall = rainfall.max()
     statistics = pd.DataFrame({
         'Variable': ['Mean', 'Min', 'Max'],
         'Value': [mean_rainfall, min_rainfall, max_rainfall],
-        'Data': print(dsd)
     })
     if option == 'Show Etc': st.write(statistics)
 
