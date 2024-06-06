@@ -196,12 +196,18 @@ if iklim is not None:
     q = best_q
     s = 12
 
-    best_model = SARIMAX(rainfall, seasonal_order=(p, d, q, s)).fit()
-
-    if option == 'Show Analytic':
+    # Fit the SARIMAX model
+    try:
+        model = SARIMAX(rainfall_diff, seasonal_order=(p, d, q, s))
+        best_model = model.fit(disp=False)
+        
         st.subheader('SARIMA Model')
         st.write(best_model.summary())
         st.write("---------------------------------------------------------------------")
+    except np.linalg.LinAlgError as e:
+        st.error(f"Linear algebra error: {e}")
+    except Exception as e:
+        st.error(f"An error occurred: {e}")
 
     if option == 'Show Analytic': st.subheader('Parameter Estimation using Maximum Likelihood Method')
     params_ml = best_model.params
