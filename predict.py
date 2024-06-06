@@ -102,6 +102,10 @@ if iklim is not None:
 
     if option == 'Show Etc': st.subheader('Rainfall Statistics')
     rainfall = data['RR']
+    if rainfall.isnull().any():
+    print("Data contains NaNs")
+    if np.isinf(rainfall).any():
+    print("Data contains infinite values")
     mean_rainfall = rainfall.mean()
     min_rainfall = rainfall.min()
     max_rainfall = rainfall.max()
