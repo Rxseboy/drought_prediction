@@ -112,7 +112,7 @@ if iklim is not None:
     statistics = pd.DataFrame({
         'Variable': ['Mean', 'Min', 'Max'],
         'Value': [mean_rainfall, min_rainfall, max_rainfall],
-        'Data': dsd
+        'Data': print(dsd)
     })
     if option == 'Show Etc': st.write(statistics)
 
