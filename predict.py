@@ -111,7 +111,7 @@ if iklim is not None:
     })
     if option == 'Show Etc': st.write(statistics)
         
-    if option == 'Show Etc': 
+    if option == 'Show Etc': st.subheader('Data const')
         if rainfall.isnull().any(): st.write("Data contains NaNs")
         if np.isinf(rainfall).any(): st.write("Data contains infinite values")
 
