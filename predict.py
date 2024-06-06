@@ -109,6 +109,8 @@ if iklim is not None:
         'Variable': ['Mean', 'Min', 'Max'],
         'Value': [mean_rainfall, min_rainfall, max_rainfall],
     })
+    if option == 'Show Etc': st.write(statistics)
+        
     if option == 'Show Etc': 
         if rainfall.isnull().any(): st.write("Data contains NaNs")
         elif np.isinf(rainfall).any(): st.write("Data contains infinite values")
@@ -121,7 +123,7 @@ if iklim is not None:
         st.write('p-value:', result[1])
         st.write('Critical Values:')
         for key, value in result[4].items(): st.write(f"\t{key}: {value}")
-
+    
     if option == 'Show Etc':
         if result[1] < 0.05: st.write("Data is stationary with respect to the mean.")
         else: st.write("Data is not stationary with respect to the mean.")
