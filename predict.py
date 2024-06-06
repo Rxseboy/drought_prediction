@@ -198,7 +198,7 @@ if iklim is not None:
 
     # Fit the SARIMAX model
     try:
-        model = SARIMAX(rainfall_diff, seasonal_order=(p, d, q, s))
+        model = SARIMAX(rainfall, seasonal_order=(p, d, q, s))
         best_model = model.fit(disp=False)
         
         st.subheader('SARIMA Model')
