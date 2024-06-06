@@ -195,10 +195,12 @@ if iklim is not None:
     d = 0
     q = best_q
     s = 12
+    # Make the series stationary if needed
+    rainfall_diff = rainfall.diff().dropna()
 
     # Fit the SARIMAX model
     try:
-        model = SARIMAX(rainfall, seasonal_order=(p, d, q, s))
+        model = SARIMAX(rainfall_diff, seasonal_order=(p, d, q, s))
         best_model = model.fit(disp=False)
         
         st.subheader('SARIMA Model')
