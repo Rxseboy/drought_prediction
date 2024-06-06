@@ -102,11 +102,6 @@ if iklim is not None:
 
     if option == 'Show Etc': st.subheader('Rainfall Statistics')
     rainfall = data['RR']
-    if rainfall.isnull().any():
-        dsd = "Data contains NaNs"
-    if np.isinf(rainfall).any():
-        dsd = "Data contains infinite values"
-    if option == 'Show Etc': st.write(dsd)
     mean_rainfall = rainfall.mean()
     min_rainfall = rainfall.min()
     max_rainfall = rainfall.max()
@@ -114,8 +109,11 @@ if iklim is not None:
         'Variable': ['Mean', 'Min', 'Max'],
         'Value': [mean_rainfall, min_rainfall, max_rainfall],
     })
-    if option == 'Show Etc': st.write(statistics)
+    if option == 'Show Etc': 
+        if rainfall.isnull().any(): st.write("Data contains NaNs")
+        elif np.isinf(rainfall).any(): st.write("Data contains infinite values")
 
+        
     if option == 'Show Etc': st.subheader('Augmented Dickey-Fuller (ADF) Test')
     result = adfuller(rainfall)
     if option == 'Show Etc':
