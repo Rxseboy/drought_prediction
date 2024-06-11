@@ -107,11 +107,10 @@ if iklim is not None:
     max_rainfall = rainfall.max()
     statistics = pd.DataFrame({
         'Variable': ['Mean', 'Min', 'Max'],
-        'Value': [mean_rainfall, min_rainfall, max_rainfall],
+        'Value': [mean_rainfall, min_rainfall, max_rainfall]
     })
     if option == 'Show Etc': st.write(statistics)
 
-        
     if option == 'Show Etc': st.subheader('Augmented Dickey-Fuller (ADF) Test')
     result = adfuller(rainfall)
     if option == 'Show Etc':
@@ -119,7 +118,7 @@ if iklim is not None:
         st.write('p-value:', result[1])
         st.write('Critical Values:')
         for key, value in result[4].items(): st.write(f"\t{key}: {value}")
-    
+
     if option == 'Show Etc':
         if result[1] < 0.05: st.write("Data is stationary with respect to the mean.")
         else: st.write("Data is not stationary with respect to the mean.")
@@ -195,6 +194,7 @@ if iklim is not None:
     d = 0
     q = best_q
     s = 12
+    
     # Make the series stationary if needed
     rainfall_diff = rainfall.diff().dropna()
 
@@ -203,9 +203,10 @@ if iklim is not None:
         model = SARIMAX(rainfall_diff, seasonal_order=(p, d, q, s))
         best_model = model.fit(disp=False)
         
-        st.subheader('SARIMA Model')
-        st.write(best_model.summary())
-        st.write("---------------------------------------------------------------------")
+        if option == 'Show Analytic':
+            st.subheader('SARIMA Model')
+            st.write(best_model.summary())
+            st.write("---------------------------------------------------------------------")
     except np.linalg.LinAlgError as e:
         st.error(f"Linear algebra error: {e}")
     except Exception as e:
@@ -412,15 +413,19 @@ if iklim is not None:
     if option == 'Show Predict':
         classification['Date'] = pd.to_datetime(classification['Date'])
 
-        st.title('Date Predict')
+        st.title('Drought Predict')
 
         # Date selection
         if 'date_option' not in st.session_state:
             st.session_state.date_option = None
 
-        date_option = st.selectbox('Select Date', [None] + classification['Date'].dt.strftime('%Y-%m-%d').unique().tolist(), index=(classification['Date'].dt.strftime('%Y-%m-%d').unique().tolist().index(st.session_state.date_option) + 1 if st.session_state.date_option else 0))
+        date_option = st.selectbox(
+            'Select Date',
+            [None] + classification['Date'].dt.strftime('%Y-%m-%d').unique().tolist(),
+            index=(classification['Date'].dt.strftime('%Y-%m-%d').unique().tolist().index(st.session_state.date_option) + 1 if st.session_state.date_option else 0)
+        )
 
-  # Update session state with the selected date
+        # Update session state with the selected date
         if date_option != st.session_state['date_option']:
             st.session_state['date_option'] = date_option
 
